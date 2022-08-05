@@ -1,15 +1,16 @@
-from fizz_buzz.fizz_buzz import (
-    BUZZ, BUZZ_NUMBER, FIZZ, FIZZ_BUZZ, FIZZ_NUMBER, fizz_buzz
+import pytest
+from fizz_buzz.fizz_buzz import fizz_buzz
+
+
+@pytest.mark.parametrize(
+    "input_data, output_answer",
+    [
+        (1, 1),
+        (3, 'Fizz!'),
+        (5, 'Buzz!'),
+        (15, 'FizzBuzz!'),
+        ('Not a number', None),
+    ]
 )
-
-FIZZ_BUZZ_NUMBER = 15
-JUST_NUMBER = 1
-NOT_A_NUMBER = 'Not a number'
-
-
-def test_fizz_buzz():
-    assert fizz_buzz(JUST_NUMBER) == JUST_NUMBER
-    assert fizz_buzz(FIZZ_NUMBER) == FIZZ
-    assert fizz_buzz(BUZZ_NUMBER) == BUZZ
-    assert fizz_buzz(FIZZ_BUZZ_NUMBER) == FIZZ_BUZZ
-    assert fizz_buzz(NOT_A_NUMBER) is None
+def test_fizz_buzz(input_data, output_answer):
+    assert fizz_buzz(input_data) == output_answer
