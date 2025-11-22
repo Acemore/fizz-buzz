@@ -21,10 +21,18 @@ jobs:
       - name: Run lint task
         run: make lint
 
-      - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v2.7.5
+      - name: Run test coverage
+        run: |
+          make test-coverage
+
+      - name: SonarQubeScan
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          coverageCommand: make test-coverage
-          debug: true
+          args: >
+            -Dsonar.projectKey=Acemore_fizz-buzz
+            -Dsonar.organization=acemore
+            -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.coverage.exclusions=tests/**
+            -Dsonar.exclusions=tests/**
